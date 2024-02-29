@@ -193,6 +193,7 @@ pkg_check_modules(PROTOBUF protobuf)
 if ("${PROTOBUF_VERSION}" VERSION_LESS "2.5.0")
   message(FATAL_ERROR "protobuf version: ${PROTOBUF_VERSION} not compatible, must be >= 2.5.0")
 endif()
+include_directories(${PROTOBUF_INCLUDE_DIRS})
 
 # After running this block of code,
 # we should have something similar to

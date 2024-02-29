@@ -443,9 +443,8 @@ void GazeboMotorModel::UpdateForcesAndMoments() {
       ignition::math::Vector3d body_velocity_perpendicular =
           relative_wind_velocity_W -
           (relative_wind_velocity_W.Dot(joint_axis) * joint_axis);
-      ignition::math::Vector3d air_drag = -std::abs(real_motor_velocity) *
-                               rotor_drag_coefficient_ *
-                               body_velocity_perpendicular;
+      // patch: align air drag model to our hardware
+      ignition::math::Vector3d air_drag = -relative_wind_velocity_W * (1 + 0.06 * relative_wind_velocity_W.Length()) * 0.2 / 4;
 
       // Apply air_drag to link.
       link_->AddForce(air_drag);
